@@ -22,7 +22,7 @@ Lexer.peekchar(r::LineNumberingReader) =
 function lexcomment(ts)
   Lexer.readchar(ts)
   if !eof(ts.io) && Lexer.peekchar(ts) == '='
-    try Lexer.skip_multiline_comment(ts, 1) end
+    try Lexer.skip_multiline_comment(ts, 1) catch; end
     return token(:multicomment)
   else
     Lexer.skip_to_eol(ts)
@@ -61,6 +61,7 @@ function qualifiedname(ts, name = nexttoken(ts))
     try
       Lexer.next_token(ts) == :(.) || break
       t = Lexer.next_token(ts)
+    catch
     end
     isidentifier(t) || break
     push!(n, t)
