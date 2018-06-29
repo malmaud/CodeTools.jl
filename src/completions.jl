@@ -34,6 +34,7 @@ function withmeta(mod, s)
         s[:type] = :constant
       end
     end
+  catch
   end
   return s
 end
